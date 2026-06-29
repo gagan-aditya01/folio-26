@@ -17,9 +17,12 @@ const hexToRGB = (hex: string) => {
 const prepColors = (input: string[]) => {
   const base = (input && input.length ? input : ['#A6C8FF', '#5227FF', '#FF9FFC']).slice(0, MAX_COLORS);
   const count = base.length;
-  const arr = [];
-  for (let i = 0; i < MAX_COLORS; i++) arr.push(hexToRGB(base[Math.min(i, base.length - 1)]));
-  const avg = [0, 0, 0];
+  const arr: [number, number, number][] = [];
+  for (let i = 0; i < MAX_COLORS; i++) {
+    const rgb = hexToRGB(base[Math.min(i, count - 1)]);
+    arr.push(rgb as [number, number, number]);
+  }
+  const avg: [number, number, number] = [0, 0, 0];
   for (let i = 0; i < count; i++) {
     avg[0] += arr[i][0];
     avg[1] += arr[i][1];

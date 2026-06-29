@@ -1,0 +1,364 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ──────────────────────────────────────────────── */
+:root {
+  --bg-base: #000000;
+  --bg-surface-1: #111111;
+  --bg-surface-2: #1c1c1c;
+  --border: #2a2a2a;
+  --border-subtle: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --text-subtle: #444444;
+  --text-faint: #2a2a2a;
+
+  /* Typography scale */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing */
+  --section-gap: clamp(6rem, 14vw, 12rem);
+  --container-max: 1280px;
+  --container-pad: clamp(1.5rem, 5vw, 4rem);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --duration-xslow: 1000ms;
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none; /* Custom cursor hides native */
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────── */
+* {
+  cursor: none !important;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-subtle);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection {
+  background: var(--text-primary);
+  color: var(--bg-base);
+}
+
+/* ─── Typography ─────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.display-xl {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.display-lg {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.display-md {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.heading-lg {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.heading-md {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.body-lg {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.body-md {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* ─── Layout Utilities ───────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section-gap {
+  padding-block: var(--section-gap);
+}
+
+/* ─── Border Utilities ───────────────────────────────────────────── */
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ─── Glassmorphism ──────────────────────────────────────────────── */
+.glass {
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ─── Skill Chip ─────────────────────────────────────────────────── */
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  background: var(--bg-surface-1);
+  font-family: var(--font-mono);
+  transition: all var(--duration-base) var(--ease-out-expo);
+  white-space: nowrap;
+}
+
+.skill-chip:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+  background: var(--bg-surface-2);
+}
+
+/* ─── Button Styles ──────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--text-primary);
+  color: var(--bg-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  transition: all var(--duration-base) var(--ease-out-expo);
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.btn-primary:hover {
+  background: var(--text-secondary);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: all var(--duration-base) var(--ease-out-expo);
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-muted);
+  background: var(--bg-surface-1);
+}
+
+/* ─── Section Label Accent ───────────────────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.section-label::before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--text-subtle);
+}
+
+/* ─── Terminal Style ─────────────────────────────────────────────── */
+.terminal-line {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.terminal-line::before {
+  content: "→";
+  color: var(--text-subtle);
+}
+
+/* ─── Gradient Noise Overlay ─────────────────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Scroll Reveal Placeholder ─────────────────────────────────── */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+/* ─── Focus Visible ──────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Timeline ───────────────────────────────────────────────────── */
+.timeline-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--border) 15%,
+    var(--border) 85%,
+    transparent
+  );
+}
+
+/* ─── GitHub Grid ────────────────────────────────────────────────── */
+.contribution-cell {
+  border-radius: 2px;
+  transition: all var(--duration-fast) ease;
+}
+
+.contribution-cell:hover {
+  transform: scale(1.4);
+}
+
+/* ─── Project Card ───────────────────────────────────────────────── */
+.project-card {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  transition: border-color var(--duration-base) var(--ease-out-expo);
+  transform-style: preserve-3d;
+}
+
+.project-card:hover {
+  border-color: var(--border);
+}
