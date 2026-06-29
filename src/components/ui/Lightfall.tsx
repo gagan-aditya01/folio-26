@@ -191,7 +191,7 @@ interface LightfallProps {
   mouseStrength?: number;
   mouseRadius?: number;
   mouseDampening?: number;
-  mixBlendMode?: string;
+  mixBlendMode?: import('react').CSSProperties['mixBlendMode'];
 }
 
 const Lightfall = ({
@@ -341,9 +341,9 @@ const Lightfall = ({
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }
-      const callIfFn = (obj: Record<string, unknown> | null, key: string) => {
+      const callIfFn = (obj: any, key: string) => {
         if (obj && typeof obj[key] === 'function') {
-          (obj[key] as () => void)();
+          obj[key]();
         }
       };
       callIfFn(programRef.current, 'remove');
