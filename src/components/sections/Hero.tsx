@@ -16,6 +16,7 @@ export default function Hero() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line
     setMounted(true);
     const handleMouseMove = (e: MouseEvent) => {
       const x = e.clientX / window.innerWidth;

@@ -191,7 +191,7 @@ interface LightfallProps {
   mouseStrength?: number;
   mouseRadius?: number;
   mouseDampening?: number;
-  mixBlendMode?: any;
+  mixBlendMode?: string;
 }
 
 const Lightfall = ({
@@ -218,10 +218,10 @@ const Lightfall = ({
 }: LightfallProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
-  const programRef = useRef<any>(null);
-  const meshRef = useRef<any>(null);
-  const geometryRef = useRef<any>(null);
-  const rendererRef = useRef<any>(null);
+  const programRef = useRef<Program | null>(null);
+  const meshRef = useRef<Mesh | null>(null);
+  const geometryRef = useRef<Triangle | null>(null);
+  const rendererRef = useRef<Renderer | null>(null);
   const mouseTargetRef = useRef([0, 0]);
   const lastTimeRef = useRef(0);
 
@@ -293,7 +293,7 @@ const Lightfall = ({
     const ro = new ResizeObserver(resize);
     ro.observe(container);
 
-    const onPointerMove = (e: any) => {
+    const onPointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       const scale = renderer.dpr || 1;
       const x = (e.clientX - rect.left) * scale;
@@ -341,9 +341,9 @@ const Lightfall = ({
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }
-      const callIfFn = (obj: any, key: string) => {
+      const callIfFn = (obj: Record<string, unknown> | null, key: string) => {
         if (obj && typeof obj[key] === 'function') {
-          obj[key].call(obj);
+          (obj[key] as () => void)();
         }
       };
       callIfFn(programRef.current, 'remove');

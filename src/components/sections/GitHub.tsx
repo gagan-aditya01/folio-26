@@ -10,7 +10,10 @@ import ScrollFloat from "@/components/ui/ScrollFloat";
 // ─── Contribution Grid (Visual representation) ─────────────────────
 function ContributionGrid() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // eslint-disable-next-line
+    setMounted(true);
+  }, []);
 
   // Generate a realistic-looking contribution pattern
   const weeks = 26;
